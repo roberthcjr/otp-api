@@ -1,0 +1,24 @@
+{
+  "name": "otp-api",
+  "version": "1.0.0",
+  "description": "An API to generate and validate OTP ",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roberthcjr/otp-api.git"
+  },
+  "keywords": [
+    "otp",
+    "API",
+    "express"
+  ],
+  "author": "Robert Carvalho",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/roberthcjr/otp-api/issues"
+  },
+  "homepage": "https://github.com/roberthcjr/otp-api#readme"
+}
