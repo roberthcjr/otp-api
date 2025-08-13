@@ -21,7 +21,7 @@ The TOTP solution will also check for the hash in the database but will also che
 
 :warning: This project don't use cron job, so it won't generate a code in TOTP every `n` seconds. It will assume that the "app" will call for it with the code every `n` second. Meaning it will only generate a new code when the endpoint is called (with or without the code).
 
-## Technologies that will be used
+## Technologies that was planned to be used
 
 - Hexagonal Architecture
 - NestJS with TypeScript
@@ -31,3 +31,14 @@ The TOTP solution will also check for the hash in the database but will also che
 - Docker
 - JestJS with Supertest
 - Swagger
+
+## Change of plans to techs used
+
+- Hexagonal Architecture -> Clean Architecture
+- NestJS with TypeScript -> Express with Typescript
+
+### Why this happened
+
+Familiarity with Clean Architecture. That was one of that cases that you have worked with something and didn't know you were working with it. After a quick search, I found out that I have worked with Clean Architecture for almost two years.
+
+For the NestJS part, it was because of the architecture I am pursuing with this project. NestJS follows more a Domain Driven Design path, that is awesome, but not the goal of this project. So I decided to follow with pure Express, because it gives me more freedom to explore the architecture.
