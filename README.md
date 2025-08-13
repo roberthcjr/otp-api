@@ -42,3 +42,53 @@ The TOTP solution will also check for the hash in the database but will also che
 Familiarity with Clean Architecture. That was one of that cases that you have worked with something and didn't know you were working with it. After a quick search, I found out that I have worked with Clean Architecture for almost two years.
 
 For the NestJS part, it was because of the architecture I am pursuing with this project. NestJS follows more a Domain Driven Design path, that is awesome, but not the goal of this project. So I decided to follow with pure Express, because it gives me more freedom to explore the architecture.
+
+## Propose of initial organization of files
+
+```
+src/  
+├── domain/
+│   ├── entities/
+│   │   └── OtpToken.ts  
+│   ├── repositories/
+│   │   └── OtpRepository.ts  
+│   └── services/
+│       └── OtpGenerator.ts  
+
+├── application/
+│   └── use-cases/
+│       ├── CreateOtp/
+│       │   ├── CreateOtpUseCase.ts  
+│       │   └── CreateOtpDTO.ts  
+│       └── ValidateOtp/
+│           ├── ValidateOtpUseCase.ts  
+│           └── ValidateOtpDTO.ts  
+
+├── infrastructure/
+│   ├── database/
+│   │   └── prisma/  
+│   │       └── OtpPrismaRepository.ts  
+│   └── config/
+│       ├── env.ts
+│       └── logger.ts
+
+├── interface/
+│   └── http/
+│       ├── controllers/
+│       │   ├── CreateOtpController.ts  
+│       │   └── ValidateOtpController.ts  
+│       ├── routes/
+│       │   └── otpRoutes.ts  
+│       └── middlewares/
+│           └── errorHandler.ts  
+│   └── server.ts  
+
+├── shared/
+│   ├── errors/
+│   │   └── AppError.ts  
+│   └── utils/
+│       ├── dateUtils.ts  
+│       └── randomUtils.ts  
+
+└── index.ts
+```
