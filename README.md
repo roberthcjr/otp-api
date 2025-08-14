@@ -130,6 +130,8 @@ It's explicit that the file organization will change, the initial idea was only 
 
 ## Infrastructure
 
+- IEncryptProvider
+- EncryptProvider
 - IOTPProvider
 - OTPProvider -> otplib
 - PrismaOTPRepository
@@ -137,3 +139,10 @@ It's explicit that the file organization will change, the initial idea was only 
 - EnvConfig
 - ILogger
 - Logger
+
+# Database Organization
+
+There's no mistery here, one table with the follow columns:
+
+- email: varchar(50) [https://stackoverflow.com/a/1199245]
+- secret: varchar(100) (Didn't find much about a size, but the discussions said about 250bits block, more than suficient 100 chars) [https://security.stackexchange.com/a/33440]
