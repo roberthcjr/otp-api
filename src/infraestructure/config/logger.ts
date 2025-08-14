@@ -1,6 +1,13 @@
 type LogLevel = 'DEBUG' | 'INFO' | 'WARN' | 'ERROR';
 
-export default class Logger {
+export interface ILogger {
+  debug: (message: string, ...args: any[]) => void;
+  info: (message: string, ...args: any[]) => void;
+  warn: (message: string, ...args: any[]) => void;
+  error: (message: string, ...args: any[]) => void;
+}
+
+export default class Logger implements ILogger {
   private context?: string;
   private levelPriority: Record<LogLevel, number> = {
     DEBUG: 1,
