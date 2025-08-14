@@ -1,4 +1,4 @@
-interface IExpressConfig {
+export interface IExpressConfig {
   port: number;
 }
 
