@@ -4,7 +4,7 @@
   "description": "An API to generate and validate OTP ",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node src/index.ts",
+    "dev": "ts-node -r tsconfig-paths/register src/index.ts",
     "test": "jest"
   },
   "repository": {
@@ -29,6 +29,7 @@
     "@types/express": "5.0.3",
     "@types/node": "24.2.1",
     "ts-node": "10.9.2",
+    "tsconfig-paths": "4.2.0",
     "typescript": "5.9.2"
   }
 }
