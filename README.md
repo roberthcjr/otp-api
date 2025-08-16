@@ -133,7 +133,7 @@ It's explicit that the file organization will change, the initial idea was only 
 - IEncryptProvider
 - EncryptProvider
 - IOTPProvider
-- OTPProvider -> otplib
+- OTPProvider -> otplib -> due to lack of support on this package, decided to move with otpauth
 - PrismaOTPRepository
 - IEnvConfig
 - EnvConfig
@@ -146,3 +146,7 @@ There's no mistery here, one table with the follow columns:
 
 - email: varchar(50) [https://stackoverflow.com/a/1199245]
 - secret: varchar(100) (Didn't find much about a size, but the discussions said about 250bits block, more than suficient 100 chars) [https://security.stackexchange.com/a/33440]
+
+# Tests
+
+Tests are extremelly important to keep the software running as inteded. But there is another type of tests the will be done, or it is done depeding on when you're reading, in this project: Knowlagement Tests. First time a read about them was in Clean Code book, saying that tests can really help you understand the behavior of some library or third party code. Here it was used to explore the behavior of otpauth.
