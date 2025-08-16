@@ -1,20 +1,22 @@
 import type { ICreateOTP } from 'src/application/use-cases/CreateOTP';
-import type { IFindOTP } from 'src/application/use-cases/FindOTP';
-import type { IOTPEntity } from 'src/domain/entities/OTPEntity';
+import type { IValidateOTP } from 'src/application/use-cases/ValidateOTP';
 
 export interface IOTPController {
-  create(email: string): Promise<IOTPEntity>;
-  find(email: string): Promise<IOTPEntity>;
+  create(email: string): Promise<string>;
+  validate(email: string, code: string): Promise<boolean>;
 }
 
 export class OTPController implements IOTPController {
-  constructor(private createOTP: ICreateOTP, private findOTP: IFindOTP) {}
+  constructor(
+    private createOTP: ICreateOTP,
+    private validateOTP: IValidateOTP,
+  ) {}
 
-  create(email: string): Promise<IOTPEntity> {
+  create(email: string): Promise<string> {
     return this.createOTP.execute(email);
   }
 
-  find(email: string): Promise<IOTPEntity> {
-    return this.findOTP.execute(email);
+  validate(email: string, code: string): Promise<boolean> {
+    return this.validateOTP.execute(email, code);
   }
 }
