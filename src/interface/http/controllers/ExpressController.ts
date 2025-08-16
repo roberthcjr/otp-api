@@ -21,7 +21,12 @@ export class ExpressController {
   async find(req: Request, res: Response, next: NextFunction) {
     try {
       const email = req.params.email as unknown as string;
-      const otp = await this.otpController.find(email);
+      const code = req.params.code as unknown as string;
+      const otp: boolean = await this.otpController.validate(email, code);
+
+      if (!otp) {
+        throw new Error('Wrong Code');
+      }
 
       return res.status(200).send(otp);
     } catch (error) {
