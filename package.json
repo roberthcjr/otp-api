@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node -r tsconfig-paths/register src/index.ts",
     "services:up": "docker compose -f ./infra/compose.yml up -d",
-    "test": "jest"
+    "test": "jest --watch"
   },
   "repository": {
     "type": "git",
