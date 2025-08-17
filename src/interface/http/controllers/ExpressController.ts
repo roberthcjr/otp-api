@@ -7,7 +7,7 @@ export class ExpressController {
 
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const email = req.body as unknown as string;
+      const email = req.body.email as unknown as string;
       const otp = await this.otpController.create(email);
 
       return res.status(201).send(otp);
@@ -18,10 +18,10 @@ export class ExpressController {
     }
   }
 
-  async find(req: Request, res: Response, next: NextFunction) {
+  async validate(req: Request, res: Response, next: NextFunction) {
     try {
-      const email = req.params.email as unknown as string;
-      const code = req.params.code as unknown as string;
+      const email = req.body.email as unknown as string;
+      const code = req.body.code as unknown as string;
       const otp: boolean = await this.otpController.validate(email, code);
 
       if (!otp) {
