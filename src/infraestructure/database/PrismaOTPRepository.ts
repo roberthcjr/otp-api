@@ -17,7 +17,7 @@ export class PrismaOTPRepository implements IOTPRepository {
   find(email: string): Promise<IOTPEntity | null> {
     return this.prisma.oTP.findFirst({
       where: {
-        email: email,
+        email,
       },
     });
   }
