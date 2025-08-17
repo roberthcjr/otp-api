@@ -13,4 +13,5 @@ module.exports = {
   clearMocks: true,
   coverageDirectory: 'coverage',
   collectCoverageFrom: ['src/**/*.{ts,tsx}', '!src/**/*.d.ts'],
+  modulePaths: ['./']
 };
