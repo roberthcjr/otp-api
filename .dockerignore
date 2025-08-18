@@ -1,0 +1,14 @@
+node_modules
+dist
+*.log
+*.md
+.git
+.env*
+.editorconfig
+.gitignore
+.prettierrc
+eslint.config.mjs
+jest.config.js
+
+__tests__
+infra/compose*
