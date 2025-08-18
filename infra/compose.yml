@@ -6,3 +6,23 @@ services:
       - ../.env
     ports:
       - '5434:5432'
+
+  app:
+    build:
+      context: ../
+      dockerfile: Dockerfile.dev
+    ports:
+      - '3500:3500'
+    env_file:
+      - ../.env
+    develop:
+      watch:
+        - action: sync
+          path: ../src
+          target: /app/src
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+    depends_on:
+      - database

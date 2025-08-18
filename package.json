@@ -4,8 +4,13 @@
   "description": "An API to generate and validate OTP ",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run services:up && nodemon --legacy-watch --exec ts-node -r tsconfig-paths/register src/index.ts",
+    "dev": "nodemon --legacy-watch --exec ts-node -r tsconfig-paths/register src/index.ts",
     "services:up": "docker compose -f ./infra/compose.yml up -d",
+    "postservices:up": "docker compose -f ./infra/compose.yml down",
+    "services:watch": "docker compose -f ./infra/compose.yml up --watch",
+    "postservices:watch": "docker compose -f ./infra/compose.yml down",
+    "prisma:migrate": "prisma migrate dev",
+    "migrate:start:dev": "npm run prisma:migrate && npm run dev",
     "test": "jest --watch"
   },
   "repository": {
