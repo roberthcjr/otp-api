@@ -150,3 +150,11 @@ There's no mistery here, one table with the follow columns:
 # Tests
 
 Tests are extremelly important to keep the software running as inteded. But there is another type of tests the will be done, or it is done depeding on when you're reading, in this project: Knowlagement Tests. First time a read about them was in Clean Code book, saying that tests can really help you understand the behavior of some library or third party code. Here it was used to explore the behavior of otpauth.
+
+Later I'll explore some integration tests. It is very nice to do TDD, but this time I'll do the code and do tests later. So Tests will come again later on.
+
+# Errors
+
+It is very important to have custom errors in our application. It can be very handy to debug your code later or to give a good response to your client side. But don't distribute every error to the client side, some users can have bad intentions and use the response to exploit your code. So keep in mind what Errors you are sending.
+
+In this project, the only errors that will be returned to the client side are InternalServerErrors and OTPInvalidError. Other errors like DatabaseError or ServiceError will only be used internally to give a cause to some errors. This last one helps developers know the cause of some generic errors that was sent to the client-side.
