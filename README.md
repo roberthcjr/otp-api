@@ -19,6 +19,10 @@ You'll only need Docker. Installing any Node is optional just to make your life 
 
     # Develop mode, hot reload
     npm run services:watch
+  ```
+
+  ```bash
+
     # Up mode, services available
     npm run services:up
   ```
@@ -31,9 +35,39 @@ You'll only need Docker. Installing any Node is optional just to make your life 
 
     # Develop mode, hot reload
     docker compose -f ./infra/compose.yml up --watch
-    # Up mode, services available
-    docker compose -f ./infra/compose.yml up -d
   ```
+
+  ```bash
+
+  # Up mode, services available
+  docker compose -f ./infra/compose.yml up -d
+  ```
+
+### Giving a try
+
+With the services running. You can:
+
+```bash
+
+  # Generate a token
+  curl -X POST http://localhost:3500/token/generate \
+  -H "Content-Type: application/json" \
+  -d '{
+  "email": "yours@email.com"
+  }'
+```
+
+```bash
+
+# Up mode, services available
+curl -X POST http://localhost:3500/token/validate \
+-H "Content-Type: application/json" \
+-d '{
+  "email": "yours@email.com",
+  "code": "code-generated"
+}'
+
+```
 
 ## What is a One Time Password
 
