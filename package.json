@@ -32,6 +32,7 @@
     "@prisma/client": "6.14.0",
     "dotenv-expand": "12.0.2",
     "express": "5.1.0",
+    "express-rate-limit": "8.0.1",
     "otpauth": "9.4.1",
     "prisma": "6.14.0"
   },
