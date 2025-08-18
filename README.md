@@ -1,5 +1,40 @@
 # One Time Password - RestAPI
 
+# HOW TO RUN
+
+## Techonologies that you must have
+
+You'll only need Docker. Installing any Node is optional just to make your life easier using scripts
+
+- Docker -> https://docs.docker.com/get-started/get-docker/
+- \[OPTIONAL\] NodeJS -> I recommend using nvm(https://github.com/nvm-sh/nvm) or nvm windows(https://github.com/coreybutler/nvm-windows)
+
+## How to run the project
+
+### With Node installed
+
+- In the root directory of the project run:
+
+  ```bash
+
+    # Develop mode, hot reload
+    npm run services:watch
+    # Up mode, services available
+    npm run services:up
+  ```
+
+### With Node not installed
+
+- In the root directory of the project run:
+
+  ```bash
+
+    # Develop mode, hot reload
+    docker compose -f ./infra/compose.yml up --watch
+    # Up mode, services available
+    docker compose -f ./infra/compose.yml up -d
+  ```
+
 ## What is a One Time Password
 
 A six digit automatic generated code that can be used only once. There are two types of One-Time Password (OTP): Time-Based One-Time Password(TOTP) and Hash-Based One-Time Password(HOTP).
@@ -158,3 +193,7 @@ Later I'll explore some integration tests. It is very nice to do TDD, but this t
 It is very important to have custom errors in our application. It can be very handy to debug your code later or to give a good response to your client side. But don't distribute every error to the client side, some users can have bad intentions and use the response to exploit your code. So keep in mind what Errors you are sending.
 
 In this project, the only errors that will be returned to the client side are InternalServerErrors and OTPInvalidError. Other errors like DatabaseError or ServiceError will only be used internally to give a cause to some errors. This last one helps developers know the cause of some generic errors that was sent to the client-side.
+
+# Request Limiter
+
+A request limiter is good thing to have on your project. In a project that is all about verifing, giving limits to the client to request in our API is a must have. I'm using express-rate-limit because is the main library for express in request limits.
