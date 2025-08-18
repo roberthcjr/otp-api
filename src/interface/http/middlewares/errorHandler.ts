@@ -1,6 +1,7 @@
 // src/interface/http/middleware/errorHandler.ts
 import { Request, Response, NextFunction } from 'express';
 import { AppError } from 'src/shared/errors/AppErrors';
+import { OTPInvalidError } from 'src/shared/errors/DomainErrors';
 
 export function errorHandler(
   err: unknown,
@@ -8,21 +9,20 @@ export function errorHandler(
   res: Response,
   _next: NextFunction,
 ) {
-  if (err instanceof AppError) {
+  if (err instanceof OTPInvalidError)
     return res.status(err.statusCode).json({
       error: {
         message: err.message,
         code: err.code,
       },
     });
-  }
 
-  console.error('[UNKNOW ERROR] (errorHandler):', err);
+  const publicError = new AppError('Internal Server Error');
 
-  return res.status(500).json({
+  return res.status(publicError.statusCode).json({
     error: {
-      message: 'Internal server error',
-      code: 'INTERNAL_ERROR',
+      message: publicError.message,
+      code: publicError.code,
     },
   });
 }
