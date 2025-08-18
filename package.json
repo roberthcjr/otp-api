@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "nodemon --legacy-watch --exec ts-node -r tsconfig-paths/register src/index.ts",
     "services:up": "docker compose -f ./infra/compose.yml up -d",
-    "postservices:up": "docker compose -f ./infra/compose.yml down",
     "services:watch": "docker compose -f ./infra/compose.yml up --watch",
     "postservices:watch": "docker compose -f ./infra/compose.yml down",
     "prisma:migrate": "prisma migrate dev",
