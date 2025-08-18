@@ -15,7 +15,8 @@ const prisma = new PrismaClient();
 const otpRepository = new PrismaOTPRepository(prisma);
 const otpService = new OTPAuthService(envConfig);
 
-const createOTP = new CreateOTP(otpRepository, otpService);
+const createOTPLogger = new Logger('Create OTP');
+const createOTP = new CreateOTP(otpRepository, otpService, createOTPLogger);
 const validateOTP = new ValidateOTP(otpRepository, otpService);
 
 const otpController = new OTPController(createOTP, validateOTP);
