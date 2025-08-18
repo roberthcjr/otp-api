@@ -8,6 +8,7 @@ export class ExpressController {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const email = req.body.email as unknown as string;
+
       const otp = await this.otpController.create(email);
 
       return res.status(201).send(otp);
@@ -22,15 +23,11 @@ export class ExpressController {
     try {
       const email = req.body.email as unknown as string;
       const code = req.body.code as unknown as string;
-      const otp: boolean = await this.otpController.validate(email, code);
+      const response = await this.otpController.validate(email, code);
 
-      if (!otp) {
-        throw new Error('Wrong Code');
-      }
-
-      return res.status(200).send(otp);
+      return res.status(200).send(response);
     } catch (error) {
-      this.logger.error(error);
+      this.logger.error(error.message);
 
       next(error);
     }

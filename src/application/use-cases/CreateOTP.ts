@@ -1,5 +1,6 @@
 import type { IOTPRepository } from 'src/domain/repositories/IOTPRepository';
 import type { IOTPService } from 'src/domain/services/IOTPService';
+import { ServiceError } from 'src/shared/errors/InfraestructureErrors';
 
 export interface ICreateOTP {
   execute(email: string): Promise<string>;
@@ -12,15 +13,19 @@ export class CreateOTP implements ICreateOTP {
   ) {}
 
   async execute(email: string): Promise<string> {
-    let user = await this.otpRepository.find(email);
+    try {
+      let user = await this.otpRepository.find(email);
 
-    if (!user) {
-      const secret = this.totpService.generateSecret();
-      user = await this.otpRepository.create(email, secret);
+      if (!user) {
+        const secret = this.totpService.generateSecret();
+        user = await this.otpRepository.create(email, secret);
+      }
+
+      const code = await this.totpService.generateOTP(user.email, user.secret);
+
+      return code;
+    } catch (error) {
+      throw new ServiceError(error);
     }
-
-    const code = await this.totpService.generateOTP(user.email, user.secret);
-
-    return code;
   }
 }

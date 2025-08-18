@@ -1,6 +1,7 @@
 import * as express from 'express';
 import type { IEnvConfig } from 'src/infraestructure/config/env';
 import type { ILogger } from 'src/infraestructure/config/logger';
+import { errorHandler } from './middlewares/errorHandler';
 
 interface IServer {
   listen: () => void;
@@ -19,6 +20,7 @@ export class Server implements IServer {
   initiateMiddleware() {
     this.app.use(express.json());
     this.app.use('/', this.router);
+    this.app.use(errorHandler);
   }
 
   listen() {
