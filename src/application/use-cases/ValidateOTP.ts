@@ -4,7 +4,7 @@ import { OTPInvalidError } from 'src/shared/errors/DomainErrors';
 import { DatabaseError } from 'src/shared/errors/InfraestructureErrors';
 
 export interface IValidateOTP {
-  execute(email: string, code: string): Promise<{ success: boolean }>;
+  execute(email: string, code: string): Promise<boolean>;
 }
 
 export class ValidateOTP implements IValidateOTP {
@@ -13,7 +13,7 @@ export class ValidateOTP implements IValidateOTP {
     private totpService: IOTPService,
   ) {}
 
-  async execute(email: string, code: string): Promise<{ success: boolean }> {
+  async execute(email: string, code: string): Promise<boolean> {
     try {
       let user = await this.otpRepository.find(email);
       if (!user) {
@@ -30,7 +30,7 @@ export class ValidateOTP implements IValidateOTP {
         throw new OTPInvalidError();
       }
 
-      return { success: isVerified };
+      return isVerified;
     } catch (error) {
       if (error instanceof OTPInvalidError) throw error;
 

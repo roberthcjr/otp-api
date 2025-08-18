@@ -11,7 +11,10 @@ export class ExpressController {
 
       const otp = await this.otpController.create(email);
 
-      return res.status(201).send(otp);
+      return res.status(201).send({
+        email,
+        otp,
+      });
     } catch (error) {
       this.logger.error(error.message, error);
 
@@ -23,9 +26,12 @@ export class ExpressController {
     try {
       const email = req.body.email as unknown as string;
       const code = req.body.code as unknown as string;
-      const response = await this.otpController.validate(email, code);
+      const isVerified = await this.otpController.validate(email, code);
 
-      return res.status(200).send(response);
+      return res.status(200).send({
+        email,
+        isVerified,
+      });
     } catch (error) {
       this.logger.error(error.message, error);
       next(error);
