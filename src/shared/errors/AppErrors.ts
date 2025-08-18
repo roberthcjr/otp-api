@@ -1,18 +1,26 @@
-// src/shared/errors/AppError.ts
-
 export class AppError extends Error {
   public readonly code: string;
   public readonly statusCode: number;
-  public readonly cause?: any;
+  public readonly cause?: unknown;
 
-  constructor(message: string, code: string, statusCode = 500, cause?: any) {
+  constructor(
+    message: string,
+    options: {
+      code?: string;
+      statusCode?: number;
+      cause?: unknown;
+    } = {},
+  ) {
     super(message);
-    this.code = code;
-    this.statusCode = statusCode;
-    this.cause = cause;
 
-    // Fixes prototype chain on TS
-    Object.setPrototypeOf(this, new.target.prototype);
-    Error.captureStackTrace(this, this.constructor);
+    this.name = this.constructor.name;
+    this.code = options.code ?? 'APP_ERROR';
+    this.statusCode = options.statusCode ?? 500;
+    this.cause = options.cause;
+
+    // Mantém stack trace limpo no Node
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, this.constructor);
+    }
   }
 }

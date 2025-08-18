@@ -60,5 +60,3 @@ export default class Logger implements ILogger {
     this.currentLevel = level;
   }
 }
-
-export const globalLogger = new Logger('OTP Api');

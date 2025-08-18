@@ -13,7 +13,7 @@ export class ExpressController {
 
       return res.status(201).send(otp);
     } catch (error) {
-      this.logger.error(error);
+      this.logger.error(error.message, error);
 
       next(error);
     }
@@ -27,8 +27,7 @@ export class ExpressController {
 
       return res.status(200).send(response);
     } catch (error) {
-      this.logger.error(error.message);
-
+      this.logger.error(error.message, error);
       next(error);
     }
   }
