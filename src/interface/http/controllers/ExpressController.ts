@@ -1,9 +1,8 @@
 import type { Request, Response, NextFunction } from 'express';
 import type { IOTPController } from './OTPController';
-import type { ILogger } from 'src/infraestructure/config/logger';
 
 export class ExpressController {
-  constructor(private otpController: IOTPController, private logger: ILogger) {}
+  constructor(private otpController: IOTPController) {}
 
   async create(req: Request, res: Response, next: NextFunction) {
     try {
@@ -16,8 +15,6 @@ export class ExpressController {
         otp,
       });
     } catch (error) {
-      this.logger.error(error.message, error);
-
       next(error);
     }
   }
@@ -33,7 +30,6 @@ export class ExpressController {
         isVerified,
       });
     } catch (error) {
-      this.logger.error(error.message, error);
       next(error);
     }
   }

@@ -22,8 +22,7 @@ const createOTP = new CreateOTP(otpRepository, otpService, createOTPLogger);
 const validateOTP = new ValidateOTP(otpRepository, otpService);
 
 const otpController = new OTPController(createOTP, validateOTP);
-const appLogger = new Logger('OTP Api');
-const expressController = new ExpressController(otpController, appLogger);
+const expressController = new ExpressController(otpController);
 
 const router = Router();
 
