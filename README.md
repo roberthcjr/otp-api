@@ -1,5 +1,10 @@
 # OTP - RestAPI - \[ENGLISH VERSION DOWN BELOW\]
 
+# OBJETIVOS
+
+- [x] Fazer um TOTP
+- [ ] Fazer um HOTP
+
 # COMO EXECUTAR
 
 ## Configurações
@@ -247,6 +252,11 @@ Um limitador de requisições é algo bom de se ter em seu projeto. Em um projet
 # README (English)
 
 # OTP - RestAPI
+
+# OBJECTIVES
+
+- [x] Do a TOTP
+- [ ] Do an HOTP
 
 # HOW TO RUN
 
