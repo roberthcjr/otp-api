@@ -2,6 +2,18 @@
 
 # COMO EXECUTAR
 
+## Configurações
+
+Ajuste as configurações mudando os valores no .env.docker e no .env:
+
+**ALGORITHM** -> Método de encriptação ("SHA1", "SHA224", "SHA256", "SHA384", "SHA512", "SHA3-224", "SHA3-256", "SHA3-384" e "SHA3-512")
+**DIGITS** -> Número de dígitos do código OTP
+**SECRET_SIZE** -> Tamanho do segredo gerado
+**PERIOD** -> Tempo de duração do OTP
+**WINDOW** -> Tamanho da janela aceitável para evitar erros de tempo
+
+> Demais valores nos arquivos não afetam no comportamento apenas configurações de serviços
+
 ## Tecnologias necessárias
 
 Você só precisará do Docker. Instalar o Node é opcional, apenas para facilitar sua vida usando scripts.
@@ -237,6 +249,18 @@ Um limitador de requisições é algo bom de se ter em seu projeto. Em um projet
 # OTP - RestAPI
 
 # HOW TO RUN
+
+## Settings
+
+Adjust the settings by changing the values in `.env.docker` and `.env`:
+
+- **ALGORITHM** → Encryption method (`"SHA1"`, `"SHA224"`, `"SHA256"`, `"SHA384"`, `"SHA512"`, `"SHA3-224"`, `"SHA3-256"`, `"SHA3-384"`, `"SHA3-512"`)
+- **DIGITS** → Number of digits in the OTP code
+- **SECRET_SIZE** → Size of the generated secret
+- **PERIOD** → Duration time of the OTP
+- **WINDOW** → Acceptable time window size to avoid timing errors
+
+> Other values in these files do not affect the OTP behavior, they are only used for service configurations.
 
 ## Techonologies that you must have
 
