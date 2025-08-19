@@ -1,4 +1,3 @@
-// src/interface/http/routes/otpRoutes.ts
 import { Router } from 'express';
 import { PrismaClient } from 'generated/prisma';
 import { CreateOTP } from 'src/application/use-cases/CreateOTP';

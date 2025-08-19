@@ -1,4 +1,3 @@
-// src/interface/http/middleware/errorHandler.ts
 import { Request, Response, NextFunction } from 'express';
 import ConventionalLogger from 'src/infraestructure/config/Logger';
 import { AppError } from 'src/shared/errors/AppErrors';
