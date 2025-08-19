@@ -1,13 +1,10 @@
-import type { IOTPRepository } from 'src/domain/repositories/IOTPRepository';
-import type { IOTPService } from 'src/domain/services/IOTPService';
-import type { ILogger } from 'src/infraestructure/config/Logger';
 import { ServiceError } from 'src/shared/errors/InfraestructureErrors';
+import type ICreateOTP from './ICreateOTP';
+import type IOTPRepository from 'src/domain/repositories/IOTPRepository';
+import type IOTPService from 'src/domain/services/IOTPService';
+import type ILogger from 'src/infraestructure/config/ILogger';
 
-export interface ICreateOTP {
-  execute(email: string): Promise<string>;
-}
-
-export class CreateOTP implements ICreateOTP {
+export default class CreateOTP implements ICreateOTP {
   constructor(
     private otpRepository: IOTPRepository,
     private totpService: IOTPService,

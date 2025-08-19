@@ -1,10 +1,10 @@
 // tests/integration/otp.integration.spec.ts
-import envConfig from 'src/infraestructure/config/env';
-import { OTPAuthService } from '../../src/infraestructure/services/OTPAuthService';
+import envConfig from 'src/infraestructure/config/DefaultEnvCofig';
 import { PrismaClient } from 'generated/prisma';
-import { PrismaOTPRepository } from 'src/infraestructure/database/PrismaOTPRepository';
 import ConventionalLogger from 'src/infraestructure/config/Logger';
-import { CreateOTP } from 'src/application/use-cases/CreateOTP';
+import CreateOTP from 'src/application/use-cases/CreateOTP';
+import PrismaOTPRepository from 'src/infraestructure/database/PrismaOTPRepository';
+import OTPAuthService from 'src/infraestructure/services/OTPAuthService';
 
 const API_URL = `http://localhost:${envConfig.express.port}`;
 

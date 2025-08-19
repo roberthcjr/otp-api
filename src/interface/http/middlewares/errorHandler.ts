@@ -5,7 +5,7 @@ import { OTPInvalidError } from 'src/shared/errors/DomainErrors';
 
 const appLogger = new ConventionalLogger('App Logger');
 
-export function errorHandler(
+export default function errorHandler(
   err: Error,
   req: Request,
   res: Response,

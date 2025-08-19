@@ -1,9 +1,8 @@
 import * as OTPAuth from 'otpauth';
+import type IOTPService from 'src/domain/services/IOTPService';
+import type IEnvConfig from '../config/IEnvConfig';
 
-import type { IOTPService } from 'src/domain/services/IOTPService';
-import type { IEnvConfig } from '../config/env';
-
-export class OTPAuthService implements IOTPService {
+export default class OTPAuthService implements IOTPService {
   constructor(private config: IEnvConfig) {}
 
   generateSecret(): string {

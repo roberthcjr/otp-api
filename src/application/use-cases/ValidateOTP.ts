@@ -1,13 +1,10 @@
-import type { IOTPRepository } from 'src/domain/repositories/IOTPRepository';
-import type { IOTPService } from 'src/domain/services/IOTPService';
 import { OTPInvalidError } from 'src/shared/errors/DomainErrors';
 import { DatabaseError } from 'src/shared/errors/InfraestructureErrors';
+import type IValidateOTP from './IValidateOTP';
+import type IOTPRepository from 'src/domain/repositories/IOTPRepository';
+import type IOTPService from 'src/domain/services/IOTPService';
 
-export interface IValidateOTP {
-  execute(email: string, code: string): Promise<boolean>;
-}
-
-export class ValidateOTP implements IValidateOTP {
+export default class ValidateOTP implements IValidateOTP {
   constructor(
     private otpRepository: IOTPRepository,
     private totpService: IOTPService,

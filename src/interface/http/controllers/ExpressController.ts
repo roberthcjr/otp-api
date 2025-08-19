@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
-import type { IOTPController } from './OTPController';
+import type IOTPController from './IOTPController';
 
-export class ExpressController {
+export default class ExpressController {
   constructor(private otpController: IOTPController) {}
 
   async create(req: Request, res: Response, next: NextFunction) {

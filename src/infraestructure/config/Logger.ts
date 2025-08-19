@@ -1,11 +1,5 @@
-type LogLevel = 'DEBUG' | 'INFO' | 'WARN' | 'ERROR';
-
-export interface ILogger {
-  debug: (message: string, ...args: any[]) => void;
-  info: (message: string, ...args: any[]) => void;
-  warn: (message: string, ...args: any[]) => void;
-  error: (message: string, ...args: any[]) => void;
-}
+import type { LogLevel } from './ILogger';
+import type ILogger from './ILogger';
 
 export default class ConventionalLogger implements ILogger {
   private context?: string;

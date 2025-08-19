@@ -18,7 +18,6 @@ export class AppError extends Error {
     this.statusCode = options.statusCode ?? 500;
     this.cause = options.cause;
 
-    // Mantém stack trace limpo no Node
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, this.constructor);
     }

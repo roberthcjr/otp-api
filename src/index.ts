@@ -1,4 +1,4 @@
-import envConfig from './infraestructure/config/env';
+import envConfig from './infraestructure/config/DefaultEnvCofig';
 import ConventionalLogger from './infraestructure/config/Logger';
 import router from './interface/http/routes/otpRoutes';
 import { Server } from './interface/http/server';

@@ -1,12 +1,8 @@
-import type { ICreateOTP } from 'src/application/use-cases/CreateOTP';
-import type { IValidateOTP } from 'src/application/use-cases/ValidateOTP';
+import type ICreateOTP from 'src/application/use-cases/ICreateOTP';
+import type IValidateOTP from 'src/application/use-cases/IValidateOTP';
+import type IOTPController from './IOTPController';
 
-export interface IOTPController {
-  create(email: string): Promise<string>;
-  validate(email: string, code: string): Promise<boolean>;
-}
-
-export class OTPController implements IOTPController {
+export default class OTPController implements IOTPController {
   constructor(
     private createOTP: ICreateOTP,
     private validateOTP: IValidateOTP,

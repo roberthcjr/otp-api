@@ -1,5 +1,5 @@
 import * as OTPAuth from 'otpauth';
-import { OTPAuthService } from 'src/infraestructure/services/OTPAuthService';
+import OTPAuthService from 'src/infraestructure/services/OTPAuthService';
 
 afterEach(() => {
   jest.clearAllMocks();

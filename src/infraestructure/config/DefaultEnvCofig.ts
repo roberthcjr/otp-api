@@ -1,32 +1,7 @@
-type Algorithms =
-  | 'SHA1'
-  | 'SHA224'
-  | 'SHA256'
-  | 'SHA384'
-  | 'SHA512'
-  | 'SHA3-224'
-  | 'SHA3-256'
-  | 'SHA3-384'
-  | 'SHA3-512';
+import type IEnvConfig from './IEnvConfig';
+import type { Algorithms, IOTPConfig, IServerConfig } from './IEnvConfig';
 
-export interface IServerConfig {
-  port: number;
-}
-
-export interface IOTPConfig {
-  period: number;
-  secretSize: number;
-  algorithm: Algorithms;
-  digits: number;
-  window: number;
-}
-
-export interface IEnvConfig {
-  express: IServerConfig;
-  otpConfig: IOTPConfig;
-}
-
-class EnvConfig implements IEnvConfig {
+class DefaultEnvConfig implements IEnvConfig {
   public express: IServerConfig;
   public otpConfig: IOTPConfig;
   constructor() {
@@ -43,6 +18,6 @@ class EnvConfig implements IEnvConfig {
   }
 }
 
-const envConfig = new EnvConfig();
+const envConfig = new DefaultEnvConfig();
 
 export default envConfig;

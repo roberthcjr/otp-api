@@ -1,8 +1,8 @@
 import type { PrismaClient } from 'generated/prisma';
-import type { IOTPEntity } from 'src/domain/entities/OTPEntity';
-import type { IOTPRepository } from 'src/domain/repositories/IOTPRepository';
+import type IOTPEntity from 'src/domain/entities/IOTPEntity';
+import type IOTPRepository from 'src/domain/repositories/IOTPRepository';
 
-export class PrismaOTPRepository implements IOTPRepository {
+export default class PrismaOTPRepository implements IOTPRepository {
   constructor(private prisma: PrismaClient) {}
 
   create(email: string, secret: string): Promise<IOTPEntity> {
