@@ -1,4 +1,227 @@
-# One Time Password - RestAPI
+# OTP - RestAPI - \[ENGLISH VERSION DOWN BELOW\]
+
+# COMO EXECUTAR
+
+## Tecnologias necessárias
+
+Você só precisará do Docker. Instalar o Node é opcional, apenas para facilitar sua vida usando scripts.
+
+- Docker -> https://docs.docker.com/get-started/get-docker/
+- [OPCIONAL] NodeJS -> Recomendo usar nvm(https://github.com/nvm-sh/nvm) ou nvm-windows(https://github.com/coreybutler/nvm-windows)
+
+## Como executar o projeto
+
+### Com Node instalado
+
+- No diretório raiz do projeto execute:
+
+  ```bash
+    # Modo desenvolvimento, hot reload
+    npm run services:watch
+  ```
+
+  ```bash
+    # Modo produção, serviços disponíveis
+    npm run services:up
+  ```
+
+### Sem Node instalado
+
+- No diretório raiz do projeto execute:
+
+  ```bash
+    # Modo desenvolvimento, hot reload
+    docker compose -f ./infra/compose.yml up --watch
+  ```
+
+  ```bash
+    # Modo produção, serviços disponíveis
+    docker compose -f ./infra/compose.yml up -d
+  ```
+
+### Testando
+
+Com os serviços rodando, você pode:
+
+```bash
+  # Gerar um token
+  curl -X POST http://localhost:3500/token/generate   -H "Content-Type: application/json"   -d '{
+  "email": "yours@email.com"
+  }'
+```
+
+```bash
+  # Validar um token
+  curl -X POST http://localhost:3500/token/validate   -H "Content-Type: application/json"   -d '{
+  "email": "yours@email.com",
+  "code": "code-generated"
+}'
+```
+
+## O que é uma Senha de Uso Único (OTP)
+
+Um código de seis dígitos gerado automaticamente que pode ser usado apenas uma vez. Existem dois tipos de Senhas de Uso Único (OTP): Senha de Uso Único Baseada em Tempo (TOTP) e Senha de Uso Único Baseada em Contador (HOTP).
+
+O **TOTP** gera um código de seis dígitos a cada `n` segundos.  
+O **HOTP** gera um código de seis dígitos baseado em um contador, mudando toda vez que o usuário solicita um novo HOTP.
+
+## O que este projeto propõe
+
+**Ele irá construir uma solução HOTP e uma solução TOTP.**
+
+Para a solução HOTP, a ideia inicial é gerar um código de seis dígitos e retorná-lo. Mas há um detalhe: toda vez que isso acontece, será gerado um hash no banco de dados com um _pepper_ cujo valor é baseado no contador de vezes que o usuário solicitou o HOTP.
+
+Quando o código é fornecido, ele compara os hashes com o _pepper_. Se coincidirem, retorna a informação (para este projeto, retornará apenas sucesso, já que não há outra entidade para retornar). Caso contrário, retorna falha (erro).
+
+Para a solução TOTP, a ideia inicial é gerar um código de seis dígitos e retorná-lo, armazenando seu hash no banco de dados. Diferente da solução HOTP, ele gera também a hora em que o código expira e a armazena.
+
+A solução TOTP também verificará o hash no banco de dados, mas também verificará se a data de expiração é anterior à data atual, o que significa retorno de falha e geração de um novo código.
+
+:warning: Este projeto não usa _cron job_, então não gerará um código TOTP a cada `n` segundos. Ele assumirá que o "app" chamará o endpoint a cada `n` segundos. Ou seja, só gerará um novo código quando o endpoint for chamado (com ou sem o código).
+
+## Tecnologias planejadas
+
+- Arquitetura Hexagonal -> Proposta por Eric Evans, também conhecida como Ports and Adapters. Isole seu código de código externo. Similar à Clean Architecture e Onion Architecture.
+- NestJS com TypeScript -> Typescript é a escolha principal hoje para projetos JS, previne muitos erros futuros. A injeção de dependências do NestJS é ótima, parecia se encaixar no objetivo arquitetural (me enganei).
+- Bcrypt -> Padrão da comunidade para hashing.
+- PostgreSQL -> Escolha pessoal (embora NoSQL pudesse ser mais simples no início, PostgreSQL é mais seguro para escalar).
+- PrismaORM -> Manter o código desacoplado do banco de dados.
+- Docker -> Virtualização.
+- JestJS com Supertest -> Testes unitários e integração.
+- Swagger -> Documentação.
+
+## Mudança de planos nas tecnologias
+
+- Arquitetura Hexagonal -> Clean Architecture
+- NestJS com TypeScript -> Express com TypeScript
+
+### Por que isso aconteceu
+
+Familiaridade com Clean Architecture. Descobri que já havia trabalhado com ela por quase dois anos.  
+No caso do NestJS, a escolha do Express foi por dar mais liberdade para explorar a arquitetura, já que Nest segue mais DDD.
+
+## Organização inicial dos arquivos
+
+```txt
+src/
+├── domain/
+│   ├── entities/
+│   │   └── OtpToken.ts
+│   ├── repositories/
+│   │   └── OtpRepository.ts
+│   └── services/
+│       └── OtpGenerator.ts
+
+├── application/
+│   └── use-cases/
+│       ├── CreateOtp/
+│       │   ├── CreateOtpUseCase.ts
+│       │   └── CreateOtpDTO.ts
+│       └── ValidateOtp/
+│           ├── ValidateOtpUseCase.ts
+│           └── ValidateOtpDTO.ts
+
+├── infrastructure/
+│   ├── database/
+│   │   └── prisma/
+│   │       └── OtpPrismaRepository.ts
+│   └── config/
+│       ├── env.ts
+│       └── logger.ts
+
+├── interface/
+│   └── http/
+│       ├── controllers/
+│       │   ├── CreateOtpController.ts
+│       │   └── ValidateOtpController.ts
+│       ├── routes/
+│       │   └── otpRoutes.ts
+│       └── middlewares/
+│           └── errorHandler.ts
+│   └── server.ts
+
+├── shared/
+│   ├── errors/
+│   │   └── AppError.ts
+│   └── utils/
+│       ├── dateUtils.ts
+│       └── randomUtils.ts
+
+└── index.ts
+```
+
+## Mais estudos levaram a uma mudança de planos
+
+Após estudar mais a fundo, simplifiquei a ideia:  
+Usar um **SECRET criptografado** vinculado ao e-mail no banco.
+
+- Se o e-mail existe, recupera o secret, descriptografa e gera o código.
+- Se não existe, cria o secret, salva e continua o fluxo.
+- Para validar: se não existir, falha; se existir, gera código e compara.
+
+Assim elimina a necessidade de jobs de expiração e mantém o banco mais limpo.
+
+A diferença entre TOTP e HOTP passa a ser apenas o uso de **contador**.
+
+## Design
+
+### Entidade
+
+- OTPEntity
+
+### Repositório
+
+- IOTPRepository
+
+### Casos de uso
+
+- ICreate
+- IValidate
+- Create
+- Validate
+
+### Controladores
+
+- IOTPController
+- IHTTPController
+- ExpressController
+
+### Infraestrutura
+
+- IEncryptProvider / EncryptProvider
+- IOTPProvider / OTPProvider (usando otpauth)
+- PrismaOTPRepository
+- IEnvConfig / EnvConfig
+- ILogger / Logger
+
+## Organização do Banco de Dados
+
+Uma tabela simples com colunas:
+
+- email: varchar(50)
+- secret: varchar(100)
+
+## Testes
+
+Os testes são extremamente importantes para manter o software funcionando como pretendido. Mas há outro tipo de teste que será feito, ou já foi feito dependendo de quando você estiver lendo, neste projeto: Testes de Conhecimento (Knowlagement Tests). A primeira vez que li sobre eles foi no livro Clean Code, que dizia que os testes podem realmente ajudar você a entender o comportamento de alguma biblioteca ou código de terceiros. Aqui eles foram usados para explorar o comportamento do otpauth.
+
+Mais tarde vou explorar alguns testes de integração. É muito bom fazer TDD, mas desta vez vou escrever o código primeiro e criar os testes depois. Portanto, os testes virão novamente mais adiante.
+
+## Erros
+
+É muito importante ter erros personalizados em nossa aplicação. Eles podem ser muito úteis para depurar o código mais tarde ou para fornecer uma boa resposta ao lado do cliente. Mas não distribua todos os erros para o cliente, pois alguns usuários podem ter más intenções e usar a resposta para explorar o seu código. Portanto, tenha cuidado com quais erros você está enviando.
+
+Neste projeto, os únicos erros que serão retornados ao cliente são InternalServerErrors e OTPInvalidError. Outros erros, como DatabaseError ou ServiceError, serão usados apenas internamente para indicar a causa de alguns erros. Estes últimos ajudam os desenvolvedores a saber a causa de erros genéricos que foram enviados ao lado do cliente.
+
+## Limitador de Requisições
+
+Um limitador de requisições é algo bom de se ter em seu projeto. Em um projeto que é totalmente sobre verificação, impor limites para o cliente fazer requisições em nossa API é indispensável. Estou usando o express-rate-limit, pois é a principal biblioteca do Express para limitar requisições.
+
+---
+
+# README (English)
+
+# OTP - RestAPI
 
 # HOW TO RUN
 
