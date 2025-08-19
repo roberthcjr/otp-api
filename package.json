@@ -9,9 +9,11 @@
     "services:down": "docker compose -f ./infra/compose.yml down",
     "services:watch": "docker compose -f ./infra/compose.yml up --watch",
     "postservices:watch": "docker compose -f ./infra/compose.yml down",
+    "services:wait:database": "node infra/scripts/wait-for-postgres.js",
     "prisma:migrate": "prisma migrate dev",
     "migrate:start:dev": "npm run prisma:migrate && npm run dev",
-    "test": "jest --watch"
+    "test": "npm run services:up && sleep 5 && dotenv -e .env -- jest",
+    "posttest": "npm run services:down"
   },
   "repository": {
     "type": "git",
@@ -41,6 +43,7 @@
     "@types/express": "5.0.3",
     "@types/jest": "30.0.0",
     "@types/node": "24.2.1",
+    "dotenv-cli": "10.0.0",
     "jest": "30.0.5",
     "nodemon": "3.1.10",
     "ts-jest": "29.4.1",
