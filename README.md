@@ -58,6 +58,10 @@ Com os serviços rodando, você pode:
 }'
 ```
 
+Ou você pode acessar o endpoint de documentação e testar pelos `try it out`:
+
+http://localhost:3500/api-docs
+
 ## O que é uma Senha de Uso Único (OTP)
 
 Um código de seis dígitos gerado automaticamente que pode ser usado apenas uma vez. Existem dois tipos de Senhas de Uso Único (OTP): Senha de Uso Único Baseada em Tempo (TOTP) e Senha de Uso Único Baseada em Contador (HOTP).
@@ -291,6 +295,10 @@ curl -X POST http://localhost:3500/token/validate \
 }'
 
 ```
+
+Alternately you can try through the api interface, using the button `try it out`:
+
+http://localhost:3500/api-docs
 
 ## What is a One Time Password
 

@@ -9,6 +9,8 @@ import { PrismaOTPRepository } from 'src/infraestructure/database/PrismaOTPRepos
 import { OTPAuthService } from 'src/infraestructure/services/OTPAuthService';
 import { OTPController } from '../controllers/OTPController';
 import { ExpressController } from '../controllers/ExpressController';
+import * as swaggerUi from 'swagger-ui-express';
+const swaggerDocument = require('src/docs/swagger.json');
 
 const prisma = new PrismaClient();
 
@@ -24,6 +26,8 @@ const appLogger = new Logger('OTP Api');
 const expressController = new ExpressController(otpController, appLogger);
 
 const router = Router();
+
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 router.post(
   '/token/generate',
