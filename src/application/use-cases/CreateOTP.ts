@@ -13,7 +13,7 @@ export default class CreateOTP implements ICreateOTP {
 
   async execute(email: string): Promise<string> {
     try {
-      let user = await this.otpRepository.find(email);
+      let user = await this.otpRepository.findByEmail(email);
 
       if (!user) {
         this.logger.info(

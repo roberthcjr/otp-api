@@ -12,7 +12,7 @@ export default class ValidateOTP implements IValidateOTP {
 
   async execute(email: string, code: string): Promise<boolean> {
     try {
-      let user = await this.otpRepository.find(email);
+      let user = await this.otpRepository.findByEmail(email);
       if (!user) {
         throw new DatabaseError('User not found');
       }

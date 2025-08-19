@@ -14,7 +14,7 @@ export default class PrismaOTPRepository implements IOTPRepository {
     });
   }
 
-  find(email: string): Promise<IOTPEntity | null> {
+  findByEmail(email: string): Promise<IOTPEntity | null> {
     return this.prisma.oTP.findFirst({
       where: {
         email,
