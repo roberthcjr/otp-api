@@ -1,6 +1,6 @@
 import type { IOTPRepository } from 'src/domain/repositories/IOTPRepository';
 import type { IOTPService } from 'src/domain/services/IOTPService';
-import type { ILogger } from 'src/infraestructure/config/logger';
+import type { ILogger } from 'src/infraestructure/config/Logger';
 import { ServiceError } from 'src/shared/errors/InfraestructureErrors';
 
 export interface ICreateOTP {

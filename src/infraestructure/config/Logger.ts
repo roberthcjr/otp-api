@@ -7,7 +7,7 @@ export interface ILogger {
   error: (message: string, ...args: any[]) => void;
 }
 
-export default class Logger implements ILogger {
+export default class ConventionalLogger implements ILogger {
   private context?: string;
   private levelPriority: Record<LogLevel, number> = {
     DEBUG: 1,
@@ -51,12 +51,5 @@ export default class Logger implements ILogger {
   error(message: string, ...args: any[]) {
     if (!this.shouldLog('ERROR')) return;
     console.error(this.formatMessage('ERROR', message), ...args);
-  }
-
-  setLevel(level: LogLevel) {
-    if (!this.levelPriority[level]) {
-      throw new Error(`Invalid log level: ${level}`);
-    }
-    this.currentLevel = level;
   }
 }

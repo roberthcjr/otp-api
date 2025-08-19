@@ -1,6 +1,6 @@
 import * as express from 'express';
 import type { IEnvConfig } from 'src/infraestructure/config/env';
-import type { ILogger } from 'src/infraestructure/config/logger';
+import type { ILogger } from 'src/infraestructure/config/Logger';
 import { errorHandler } from './middlewares/errorHandler';
 import rateLimit from 'express-rate-limit';
 

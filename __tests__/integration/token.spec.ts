@@ -3,7 +3,7 @@ import envConfig from 'src/infraestructure/config/env';
 import { OTPAuthService } from '../../src/infraestructure/services/OTPAuthService';
 import { PrismaClient } from 'generated/prisma';
 import { PrismaOTPRepository } from 'src/infraestructure/database/PrismaOTPRepository';
-import Logger from 'src/infraestructure/config/logger';
+import ConventionalLogger from 'src/infraestructure/config/Logger';
 import { CreateOTP } from 'src/application/use-cases/CreateOTP';
 
 const API_URL = `http://localhost:${envConfig.express.port}`;
@@ -13,7 +13,7 @@ const prisma = new PrismaClient();
 const otpRepository = new PrismaOTPRepository(prisma);
 const otpService = new OTPAuthService(envConfig);
 
-const createOTPLogger = new Logger('Create OTP - TESTS');
+const createOTPLogger = new ConventionalLogger('Create OTP - TESTS');
 const createOTP = new CreateOTP(otpRepository, otpService, createOTPLogger);
 
 beforeEach(async () => {

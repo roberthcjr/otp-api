@@ -4,7 +4,7 @@ import { PrismaClient } from 'generated/prisma';
 import { CreateOTP } from 'src/application/use-cases/CreateOTP';
 import { ValidateOTP } from 'src/application/use-cases/ValidateOTP';
 import envConfig from 'src/infraestructure/config/env';
-import Logger from 'src/infraestructure/config/logger';
+import ConventionalLogger from 'src/infraestructure/config/Logger';
 import { PrismaOTPRepository } from 'src/infraestructure/database/PrismaOTPRepository';
 import { OTPAuthService } from 'src/infraestructure/services/OTPAuthService';
 import { OTPController } from '../controllers/OTPController';
@@ -17,7 +17,7 @@ const prisma = new PrismaClient();
 const otpRepository = new PrismaOTPRepository(prisma);
 const otpService = new OTPAuthService(envConfig);
 
-const createOTPLogger = new Logger('Create OTP');
+const createOTPLogger = new ConventionalLogger('Create OTP');
 const createOTP = new CreateOTP(otpRepository, otpService, createOTPLogger);
 const validateOTP = new ValidateOTP(otpRepository, otpService);
 
