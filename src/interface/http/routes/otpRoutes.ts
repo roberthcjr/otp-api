@@ -1,6 +1,4 @@
 import { Router } from 'express';
-import { PrismaClient } from 'generated/prisma';
-import envConfig from 'src/infraestructure/config/DefaultEnvCofig';
 import ConventionalLogger from 'src/infraestructure/config/Logger';
 import PrismaOTPRepository from 'src/infraestructure/database/PrismaOTPRepository';
 import OTPAuthService from 'src/infraestructure/services/OTPAuthService';
@@ -9,7 +7,12 @@ import * as swaggerUi from 'swagger-ui-express';
 import CreateOTP from 'src/application/use-cases/CreateOTP';
 import ValidateOTP from 'src/application/use-cases/ValidateOTP';
 import OTPController from '../controllers/OTPController';
-const swaggerDocument = require('src/docs/swagger.json');
+import { PrismaClient } from 'generated/prisma';
+import * as path from 'path';
+import * as fs from 'fs';
+import envConfig from 'src/infraestructure/config/DefaultEnvCofig';
+const swaggerPath = path.resolve(__dirname, '../../../docs/swagger.json');
+const swaggerDocument = JSON.parse(fs.readFileSync(swaggerPath, 'utf-8'));
 
 const prisma = new PrismaClient();
 

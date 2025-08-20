@@ -56,6 +56,18 @@ Você só precisará do Docker. Instalar o Node é opcional, apenas para facilit
     docker compose -f ./infra/compose.yml up -d
   ```
 
+### Para produção
+
+```bash
+
+  npm run build
+```
+
+```bash
+
+npm start
+```
+
 ### Testando
 
 Com os serviços rodando, você pode:
@@ -312,6 +324,18 @@ You'll only need Docker. Installing any Node is optional just to make your life 
   # Up mode, services available
   docker compose -f ./infra/compose.yml up -d
   ```
+
+### For production
+
+```bash
+
+  npm run build
+```
+
+```bash
+
+npm start
+```
 
 ### Giving a try
 
