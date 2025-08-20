@@ -117,7 +117,7 @@ src/
 - **Clean Architecture**
 - **Prisma ORM + PostgreSQL**
 - **Docker** (containerization)
-- **Jest + Supertest** (testing)
+- **Jest** (testing)
 - **Swagger** (API docs)
 
 ---
